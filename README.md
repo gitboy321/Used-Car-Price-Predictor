@@ -48,7 +48,7 @@ Used-Car-Price-Predictor/
 ---
 
 ## 🌐 Live Application
-👉 ( )
+👉 ( https://used-car-price-predictorgit-pmnsx9cchexyy9fxoh6tbn.streamlit.app/ )
 
 ---
 
