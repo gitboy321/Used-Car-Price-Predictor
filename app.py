@@ -89,25 +89,27 @@ if st.button("Predict Price"):
         seats
     ]])
 
+    # Predict price FIRST
     price = model.predict(input_data)[0]
 
-low = int(price * 0.9)
-high = int(price * 1.1)
+    # Calculate range AFTER price exists
+    low = int(price * 0.9)
+    high = int(price * 1.1)
 
-st.markdown(
-    f"""
-    <div style="
-        padding:20px;
-        border-radius:12px;
-        background:#111827;
-        text-align:center;
-    ">
-        <p style="color:#9ca3af;">Estimated Selling Price</p>
-        <h1 style="color:#22c55e;">₹ {int(price):,}</h1>
-        <p style="color:#9ca3af;">
-        Expected range: ₹ {low:,} – ₹ {high:,}
-        </p>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+    st.markdown(
+        f"""
+        <div style="
+            padding:20px;
+            border-radius:12px;
+            background:#111827;
+            text-align:center;
+        ">
+            <p style="color:#9ca3af;">Estimated Selling Price</p>
+            <h1 style="color:#22c55e;">₹ {int(price):,}</h1>
+            <p style="color:#9ca3af;">
+            Expected range: ₹ {low:,} – ₹ {high:,}
+            </p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
