@@ -8,6 +8,7 @@ st.set_page_config(page_title="Used Car Price Predictor", layout="centered")
 
 st.title("🚗 Used Car Price Predictor")
 st.caption("This tool gives an approximate market value based on historical data.")
+layout="centered"
 st.write("Enter car details to predict the selling price")
 
 # -------------------------
@@ -56,6 +57,20 @@ engine = st.number_input("Engine (CC)", min_value=600, max_value=5000)
 max_power = st.number_input("Max Power (bhp)", min_value=20.0, max_value=500.0)
 seats = st.selectbox("Seats", [2, 4, 5, 6, 7, 8])
 
+st.subheader("📋 Car Details Summary")
+
+st.write(f"""
+- **Brand:** {brand}  
+- **Car Age:** {vehicle_age} years  
+- **Kilometers Driven:** {km_driven:,} km  
+- **Fuel Type:** {fuel_type}  
+- **Transmission:** {transmission}  
+- **Mileage:** {mileage} km/l  
+- **Engine:** {engine} cc  
+- **Power:** {max_power} bhp  
+- **Seats:** {seats}
+""")
+
 # -------------------------
 # PREDICTION
 # -------------------------
@@ -74,6 +89,25 @@ if st.button("Predict Price"):
         seats
     ]])
 
-    prediction = model.predict(input_data)
+    price = model.predict(input_data)[0]
 
-    st.success(f"💰 Estimated Selling Price: ₹ {int(prediction[0]):,}")
+low = int(price * 0.9)
+high = int(price * 1.1)
+
+st.markdown(
+    f"""
+    <div style="
+        padding:20px;
+        border-radius:12px;
+        background:#111827;
+        text-align:center;
+    ">
+        <p style="color:#9ca3af;">Estimated Selling Price</p>
+        <h1 style="color:#22c55e;">₹ {int(price):,}</h1>
+        <p style="color:#9ca3af;">
+        Expected range: ₹ {low:,} – ₹ {high:,}
+        </p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)

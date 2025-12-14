@@ -52,3 +52,28 @@ import joblib
 
 joblib.dump(model, "model/car_price_model.pkl")
 print("Model saved successfully")
+
+import pandas as pd
+
+feature_importance = pd.Series(
+    model.feature_importances_,
+    index=X.columns
+).sort_values(ascending=False)
+
+feature_importance.to_csv("model/feature_importance.csv")
+
+import pandas as pd
+
+st.subheader("📊 What Affects the Price Most?")
+
+fi = pd.read_csv("model/feature_importance.csv", index_col=0)
+st.bar_chart(fi)
+
+with st.expander("ℹ️ About this tool"):
+    st.write("""
+    This application uses a Machine Learning model trained on real used-car market data.
+    It considers factors like age, mileage, engine capacity, fuel type, and brand
+    to estimate a fair selling price.
+
+    The prediction is an approximation and should be used as a reference value.
+    """)
